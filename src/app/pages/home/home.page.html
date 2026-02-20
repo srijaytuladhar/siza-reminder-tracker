@@ -1,0 +1,66 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>My Routines</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/stats">
+        <ion-icon name="bar-chart-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="header-section ion-padding">
+    <div class="stats-card">
+      <div class="progress-container">
+        <svg viewBox="0 0 36 36" class="circular-chart">
+          <path class="circle-bg"
+            d="M18 2.0845
+              a 15.9155 15.9155 0 0 1 0 31.831
+              a 15.9155 15.9155 0 0 1 0 -31.831"
+          />
+          <path class="circle"
+            [attr.stroke-dasharray]="(completionPercentage$ | async) + ', 100'"
+            d="M18 2.0845
+              a 15.9155 15.9155 0 0 1 0 31.831
+              a 15.9155 15.9155 0 0 1 0 -31.831"
+          />
+          <text x="18" y="20.35" class="percentage">{{ (completionPercentage$ | async) | number:'1.0-0' }}%</text>
+        </svg>
+      </div>
+      <div class="info-container">
+        <h2>Daily Goal</h2>
+        <p>{{ streakCount }} Day Streak! 🔥</p>
+      </div>
+    </div>
+  </div>
+
+  <ion-list lines="none" class="routine-list">
+    <ion-list-header>
+      <ion-label>Today's Schedule</ion-label>
+    </ion-list-header>
+
+    <div *ngIf="(todayRoutines$ | async)?.length === 0" class="ion-padding ion-text-center">
+      <p>No routines scheduled for today.</p>
+    </div>
+
+    <ion-card *ngFor="let routine of todayRoutines$ | async" [class.completed]="routine.isCompletedToday">
+      <ion-item>
+        <ion-label>
+          <h3>{{ routine.title }}</h3>
+          <p>{{ routine.time }} • {{ routine.category }}</p>
+        </ion-label>
+        <ion-checkbox slot="start" [checked]="routine.isCompletedToday" (ionChange)="toggleCompletion(routine)"></ion-checkbox>
+        <ion-toggle slot="end" [checked]="routine.notificationEnabled" (ionChange)="toggleNotification(routine)">
+          <ion-icon name="notifications-outline"></ion-icon>
+        </ion-toggle>
+      </ion-item>
+    </ion-card>
+  </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button routerLink="/routine-detail">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

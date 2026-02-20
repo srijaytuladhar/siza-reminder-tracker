@@ -1,0 +1,40 @@
+.stats-summary {
+    ion-card {
+        margin: 0;
+        margin-bottom: 20px;
+        border-radius: 20px;
+
+        ion-card-content {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+        }
+    }
+}
+
+.stat-item {
+    h3 {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin: 0;
+        color: var(--ion-color-primary);
+    }
+
+    p {
+        font-size: 0.8rem;
+        color: var(--ion-color-medium);
+        margin: 5px 0 0;
+    }
+}
+
+.chart-container {
+    background: white;
+    border-radius: 20px;
+    padding: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+}
+
+ion-icon {
+    font-size: 24px;
+}

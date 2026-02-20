@@ -1,0 +1,94 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/home"></ion-back-button>
+        </ion-buttons>
+        <ion-title>{{ isEditMode ? 'Edit Routine' : 'Add Routine' }}</ion-title>
+        <ion-buttons slot="end" *ngIf="isEditMode">
+            <ion-button color="danger" (click)="delete()">
+                <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+    <form [formGroup]="routineForm" (ngSubmit)="save()">
+        <ion-item lines="full">
+            <ion-label position="stacked">Title</ion-label>
+            <ion-input formControlName="title" placeholder="e.g., Morning Meds"></ion-input>
+        </ion-item>
+
+        <ion-item lines="full">
+            <ion-label position="stacked">Category</ion-label>
+            <ion-select formControlName="category">
+                <ion-select-option *ngFor="let cat of categories" [value]="cat">{{ cat }}</ion-select-option>
+            </ion-select>
+        </ion-item>
+
+        <ion-item lines="full">
+            <ion-label position="stacked">Time</ion-label>
+            <ion-datetime-button datetime="datetime"></ion-datetime-button>
+            <ion-modal [keepContentsMounted]="true">
+                <ng-template>
+                    <ion-datetime id="datetime" presentation="time" formControlName="time"></ion-datetime>
+                </ng-template>
+            </ion-modal>
+        </ion-item>
+
+        <ion-item lines="full">
+            <ion-label position="stacked">Repeat</ion-label>
+            <ion-select formControlName="repeatType">
+                <ion-select-option value="daily">Daily</ion-select-option>
+                <ion-select-option value="weekdays">Weekdays</ion-select-option>
+                <ion-select-option value="custom">Custom Days</ion-select-option>
+            </ion-select>
+        </ion-item>
+
+        <ion-item lines="full" *ngIf="routineForm.get('repeatType')?.value === 'custom'">
+            <ion-label position="stacked">Select Days</ion-label>
+            <ion-select formControlName="customDays" multiple="true">
+                <ion-select-option [value]="1">Monday</ion-select-option>
+                <ion-select-option [value]="2">Tuesday</ion-select-option>
+                <ion-select-option [value]="3">Wednesday</ion-select-option>
+                <ion-select-option [value]="4">Thursday</ion-select-option>
+                <ion-select-option [value]="5">Friday</ion-select-option>
+                <ion-select-option [value]="6">Saturday</ion-select-option>
+                <ion-select-option [value]="0">Sunday</ion-select-option>
+            </ion-select>
+        </ion-item>
+
+        <ion-list-header>
+            <ion-label>Notifications</ion-label>
+        </ion-list-header>
+
+        <ion-item lines="full">
+            <ion-label>Enable Reminders</ion-label>
+            <ion-toggle formControlName="notificationEnabled"></ion-toggle>
+        </ion-item>
+
+        <ion-item lines="full" *ngIf="routineForm.get('notificationEnabled')?.value">
+            <ion-label>Enable Boost (Repeated Reminders)</ion-label>
+            <ion-toggle formControlName="boostEnabled"></ion-toggle>
+        </ion-item>
+
+        <ion-item lines="full" *ngIf="routineForm.get('boostEnabled')?.value">
+            <ion-label position="stacked">Boost Interval (Minutes)</ion-label>
+            <ion-range [min]="5" [max]="60" [step]="5" [snaps]="true" [pin]="true" formControlName="boostInterval">
+                <ion-label slot="start">5m</ion-label>
+                <ion-label slot="end">60m</ion-label>
+            </ion-range>
+        </ion-item>
+
+        <ion-item lines="full">
+            <ion-label position="stacked">Notes (Optional)</ion-label>
+            <ion-textarea formControlName="notes" rows="3"></ion-textarea>
+        </ion-item>
+
+        <div class="ion-padding">
+            <ion-button type="submit" expand="block" shape="round" [disabled]="routineForm.invalid">
+                {{ isEditMode ? 'Update Routine' : 'Create Routine' }}
+            </ion-button>
+        </div>
+    </form>
+</ion-content>

@@ -1,0 +1,82 @@
+.header-section {
+  background: linear-gradient(135deg, var(--ion-color-primary) 0%, var(--ion-color-secondary) 100%);
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  margin-bottom: 20px;
+}
+
+.stats-card {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  color: white;
+}
+
+.progress-container {
+  width: 80px;
+  height: 80px;
+  margin-right: 20px;
+}
+
+.circular-chart {
+  display: block;
+  max-width: 100%;
+}
+
+.circle-bg {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.2);
+  stroke-width: 3.8;
+}
+
+.circle {
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 2.8;
+  stroke-linecap: round;
+  transition: stroke-dasharray 0.5s ease;
+}
+
+.percentage {
+  fill: #ffffff;
+  font-family: sans-serif;
+  font-size: 0.5em;
+  text-anchor: middle;
+  font-weight: bold;
+}
+
+.routine-list {
+  background: transparent;
+}
+
+ion-card {
+  margin: 10px 16px;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  transition: transform 0.2s ease, opacity 0.3s ease;
+
+  &.completed {
+    opacity: 0.7;
+    transform: scale(0.98);
+    ion-label h3 {
+      text-decoration: line-through;
+      color: var(--ion-color-medium);
+    }
+  }
+}
+
+ion-item {
+  --background: transparent;
+}
+
+ion-checkbox {
+  --border-radius: 50%;
+  margin-right: 15px;
+}
+
+ion-fab-button {
+  --border-radius: 18px;
+}
