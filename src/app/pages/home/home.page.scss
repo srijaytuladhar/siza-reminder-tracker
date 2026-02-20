@@ -1,18 +1,39 @@
 .header-section {
-  background: linear-gradient(135deg, var(--ion-color-primary) 0%, var(--ion-color-secondary) 100%);
-  border-bottom-left-radius: 30px;
-  border-bottom-right-radius: 30px;
-  margin-bottom: 20px;
+  background: linear-gradient(-45deg, #6366f1, #a855f7, #ec4899, #00d2ff);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
+  margin-bottom: 25px;
+  padding-bottom: 30px;
+  box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 .stats-card {
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
-  border-radius: 20px;
-  padding: 20px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 25px;
+  padding: 24px;
   display: flex;
   align-items: center;
   color: white;
+  margin: 0 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
 .progress-container {
@@ -55,12 +76,13 @@
 ion-card {
   margin: 10px 16px;
   border-radius: 15px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   transition: transform 0.2s ease, opacity 0.3s ease;
 
   &.completed {
     opacity: 0.7;
     transform: scale(0.98);
+
     ion-label h3 {
       text-decoration: line-through;
       color: var(--ion-color-medium);
