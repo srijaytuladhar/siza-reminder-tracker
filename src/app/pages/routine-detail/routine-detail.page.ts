@@ -51,6 +51,10 @@ export class RoutineDetailPage implements OnInit {
         }
     }
 
+    selectCategory(cat: Category) {
+        this.routineForm.get('category')?.setValue(cat);
+    }
+
     async save() {
         if (this.routineForm.invalid) return;
 
@@ -62,6 +66,10 @@ export class RoutineDetailPage implements OnInit {
         };
 
         if (this.isEditMode) {
+            const oldRoutine = this.routineService.getRoutineById(this.routineId!);
+            if (oldRoutine?.nextScheduledNotificationId) {
+                await this.notificationService.cancelNotification(oldRoutine.nextScheduledNotificationId);
+            }
             await this.routineService.updateRoutine(routineData);
         } else {
             await this.routineService.addRoutine(routineData);

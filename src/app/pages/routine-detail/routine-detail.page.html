@@ -19,19 +19,25 @@
             <ion-input formControlName="title" placeholder="e.g., Morning Meds"></ion-input>
         </ion-item>
 
-        <ion-item lines="full">
-            <ion-label position="stacked">Category</ion-label>
-            <ion-select formControlName="category">
-                <ion-select-option *ngFor="let cat of categories" [value]="cat">{{ cat }}</ion-select-option>
-            </ion-select>
-        </ion-item>
+        <div class="category-selection ion-margin-top">
+            <ion-label position="stacked" class="category-label">Category</ion-label>
+            <div class="chips-container">
+                <ion-chip *ngFor="let cat of categories" [outline]="routineForm.get('category')?.value !== cat"
+                    [color]="routineForm.get('category')?.value === cat ? 'primary' : 'medium'"
+                    (click)="selectCategory(cat)">
+                    <ion-label>{{ cat }}</ion-label>
+                </ion-chip>
+            </div>
+        </div>
 
-        <ion-item lines="full">
+        <ion-item lines="full" class="time-item">
             <ion-label position="stacked">Time</ion-label>
             <ion-datetime-button datetime="datetime"></ion-datetime-button>
             <ion-modal [keepContentsMounted]="true">
                 <ng-template>
-                    <ion-datetime id="datetime" presentation="time" formControlName="time"></ion-datetime>
+                    <ion-datetime id="datetime" presentation="time" formControlName="time" [preferWheel]="false"
+                        mode="md" size="cover">
+                    </ion-datetime>
                 </ng-template>
             </ion-modal>
         </ion-item>

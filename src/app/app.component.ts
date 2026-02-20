@@ -66,10 +66,15 @@ export class AppComponent implements OnInit {
     const routine = this.routineService.getRoutineById(routineId);
     if (routine) {
       const today = new Date().toISOString().split('T')[0];
+      const completionDates = [...(routine.completionDates || [])];
+      if (!completionDates.includes(today)) {
+        completionDates.push(today);
+      }
       const updatedRoutine = {
         ...routine,
         isCompletedToday: true,
-        lastCompletedDate: today
+        lastCompletedDate: today,
+        completionDates: completionDates
       };
       await this.routineService.updateRoutine(updatedRoutine);
       await this.boostService.cancelBoosts(routineId);

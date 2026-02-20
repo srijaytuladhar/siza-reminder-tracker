@@ -12,15 +12,15 @@
         <ion-card>
             <ion-card-content>
                 <div class="stat-item">
-                    <h3>24</h3>
+                    <h3>{{ totalCompleted }}</h3>
                     <p>Total Completed</p>
                 </div>
                 <div class="stat-item">
-                    <h3>7</h3>
+                    <h3>{{ currentStreak }}</h3>
                     <p>Current Streak</p>
                 </div>
                 <div class="stat-item">
-                    <h3>85%</h3>
+                    <h3>{{ avgSuccess }}%</h3>
                     <p>Avg. Success</p>
                 </div>
             </ion-card-content>
@@ -29,26 +29,27 @@
 
     <div class="chart-container">
         <apx-chart [series]="chartOptions.series!" [chart]="chartOptions.chart!" [xaxis]="chartOptions.xaxis!"
-            [title]="chartOptions.title!"></apx-chart>
+            [yaxis]="chartOptions.yaxis!" [dataLabels]="chartOptions.dataLabels!"
+            [plotOptions]="chartOptions.plotOptions!" [theme]="chartOptions.theme!" [title]="chartOptions.title!">
+        </apx-chart>
     </div>
 
-    <ion-list lines="none">
+    <ion-list lines="none" *ngIf="earnedAchievements.length > 0; else noAchievements">
         <ion-list-header>
             <ion-label>Achievements</ion-label>
         </ion-list-header>
-        <ion-item>
-            <ion-icon name="trophy-outline" slot="start" color="warning"></ion-icon>
+        <ion-item *ngFor="let achievement of earnedAchievements">
+            <ion-icon [name]="achievement.icon" slot="start" [color]="achievement.color"></ion-icon>
             <ion-label>
-                <h3>Early Bird</h3>
-                <p>Completed 5 morning routines in a row.</p>
-            </ion-label>
-        </ion-item>
-        <ion-item>
-            <ion-icon name="flame-outline" slot="start" color="danger"></ion-icon>
-            <ion-label>
-                <h3>On Fire</h3>
-                <p>Maintained a 10-day streak.</p>
+                <h3>{{ achievement.title }}</h3>
+                <p>{{ achievement.description }}</p>
             </ion-label>
         </ion-item>
     </ion-list>
+    <ng-template #noAchievements>
+        <div class="ion-padding ion-text-center no-achievements">
+            <ion-icon name="medal-outline" color="medium"></ion-icon>
+            <p>Complete more routines to unlock achievements!</p>
+        </div>
+    </ng-template>
 </ion-content>

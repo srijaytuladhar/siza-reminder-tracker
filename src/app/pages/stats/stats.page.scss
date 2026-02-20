@@ -28,13 +28,24 @@
 }
 
 .chart-container {
-    background: white;
+    background: #1e293b; // slate-800
     border-radius: 20px;
     padding: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     margin-bottom: 20px;
 }
 
 ion-icon {
     font-size: 24px;
+}
+.no-achievements {
+    margin-top: 40px;
+    ion-icon {
+        font-size: 64px;
+        margin-bottom: 10px;
+    }
+    p {
+        color: var(--ion-color-medium);
+        font-size: 1.1rem;
+    }
 }

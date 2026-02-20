@@ -11,6 +11,7 @@ export interface Routine {
   boostAttemptsRemaining: number; // Initialized to 3, decremented on each boost
   isCompletedToday: boolean;
   lastCompletedDate?: string; // ISO string to track if it's been done today
+  completionDates?: string[]; // Array of 'YYYY-MM-DD' strings
   notes?: string;
   nextScheduledNotificationId?: number;
 }

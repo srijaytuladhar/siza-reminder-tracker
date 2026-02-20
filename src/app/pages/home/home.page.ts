@@ -17,6 +17,7 @@ import { RouterLink } from '@angular/router';
 export class HomePage implements OnInit {
     routines$: Observable<Routine[]>;
     todayRoutines$: Observable<Routine[]>;
+    upcomingRoutine$: Observable<Routine | undefined>;
     completionPercentage$: Observable<number>;
     streakCount: number = 0;
 
@@ -25,6 +26,13 @@ export class HomePage implements OnInit {
         this.todayRoutines$ = this.routines$.pipe(
             map(routines => routines.filter(r => this.isRoutineForToday(r))
                 .sort((a, b) => a.time.localeCompare(b.time)))
+        );
+        this.upcomingRoutine$ = this.todayRoutines$.pipe(
+            map(routines => {
+                const now = new Date();
+                const currentTime = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+                return routines.find(r => !r.isCompletedToday && r.time >= currentTime);
+            })
         );
         this.completionPercentage$ = this.todayRoutines$.pipe(
             map(routines => {
@@ -51,10 +59,25 @@ export class HomePage implements OnInit {
 
     async toggleCompletion(routine: Routine) {
         const today = new Date().toISOString().split('T')[0];
+        const isDone = !routine.isCompletedToday;
+        const completionDates = [...(routine.completionDates || [])];
+
+        if (isDone) {
+            if (!completionDates.includes(today)) {
+                completionDates.push(today);
+            }
+        } else {
+            const index = completionDates.indexOf(today);
+            if (index > -1) {
+                completionDates.splice(index, 1);
+            }
+        }
+
         const updated = {
             ...routine,
-            isCompletedToday: !routine.isCompletedToday,
-            lastCompletedDate: !routine.isCompletedToday ? today : routine.lastCompletedDate
+            isCompletedToday: isDone,
+            lastCompletedDate: isDone ? today : routine.lastCompletedDate,
+            completionDates: completionDates
         };
         await this.routineService.updateRoutine(updated);
     }

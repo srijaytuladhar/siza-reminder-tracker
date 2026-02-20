@@ -3,6 +3,42 @@ ion-item {
     margin-bottom: 10px;
 }
 
+.category-selection {
+    margin-bottom: 20px;
+
+    .category-label {
+        font-size: 13px;
+        color: var(--ion-color-medium);
+        margin-bottom: 10px;
+        display: block;
+    }
+}
+
+.chips-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+
+    ion-chip {
+        margin: 0;
+        --background: transparent;
+
+        &[outline="false"] {
+            --background: var(--ion-color-primary-tint);
+            color: white;
+        }
+    }
+}
+
+.time-item {
+    ion-datetime-button {
+        --background: var(--ion-color-light);
+        --color: var(--ion-color-primary);
+        --border-radius: 8px;
+        margin-top: 5px;
+    }
+}
+
 ion-list-header {
     --padding-start: 0;
     margin-top: 20px;
