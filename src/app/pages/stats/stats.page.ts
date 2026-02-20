@@ -92,7 +92,16 @@ export class StatsPage implements OnInit, OnDestroy {
     }
 
     calculateStats(routines: Routine[]) {
+        if (!routines || routines.length === 0) {
+            this.totalCompleted = 0;
+            this.currentStreak = 0;
+            this.avgSuccess = 0;
+            this.earnedAchievements = [];
+            this.chartOptions.series = [{ name: "Success Rate", data: [0, 0, 0, 0, 0, 0, 0] }];
+            return;
+        }
         const last7Days = this.getLast7Days();
+        // ... rest of the logic ...
         const successRates: number[] = [];
         const dayNames: string[] = [];
 
@@ -194,6 +203,7 @@ export class StatsPage implements OnInit, OnDestroy {
     }
 
     private calculateCurrentStreak(routines: Routine[]): number {
+        if (!routines || routines.length === 0) return 0;
         let streak = 0;
         let d = new Date();
 
